@@ -1,8 +1,8 @@
 <?php
 include "config.php";
 
-$meaning_from_db1 = pg_query($connect, "SELECT * FROM adresses");
-$meaning_from_db2 = pg_query($connect, "SELECT * FROM hostnames");
+$adresses_table = pg_query($connect, "SELECT * FROM adresses");
+$hostnames_table = pg_query($connect, "SELECT * FROM hostnames");
 
 $hosts = [
     '192.168.0.1',
@@ -11,28 +11,28 @@ $hosts = [
 ];
 //print_r($hosts);
 
-$conclusion_array1 = pg_fetch_all($meaning_from_db1);
-//print_r($conclusion_array1);
-$conclusion_array2 = pg_fetch_all($meaning_from_db2);
-//print_r($conclusion_array2);
+$array_adresses = pg_fetch_all($adresses_table);
+//print_r($array_adresses);
+$array_hostnames = pg_fetch_all($hostnames_table);
+//print_r($array_hostnames);
 
-$new_array1 = array_column($conclusion_array1, 'id', 'ip');
-//print_r($new_array1);
-$new_array2 = array_column($conclusion_array2, 'hostname', 'id');
-//print_r($new_array2);
+$new_array_adresses = array_column($array_adresses, 'id', 'ip');
+//print_r($new_array_adresses);
+$new_array_hostnames = array_column($array_hostnames, 'hostname', 'id');
+//print_r($new_array_hostnames);
 
-$select_from_array = '';
+$multiple_arrays = '';
 
 foreach ($hosts as $key) {
-    if (array_key_exists($key, $new_array1)) {
-        $id = $new_array1[$key];
+    if (array_key_exists($key, $new_array_adresses)) {
+        $id = $new_array_adresses[$key];
 //        print_r($id);
-        $result_host = $new_array2[$id];
-//        print_r($result_host);
-        $select_from_array = $select_from_array . "<option value=\"$id\">" . $result_host . "</option>";
+        $result_host = $new_array_hostnames[$id];
+//        print_r($new_array_hostnames);
+        $multiple_arrays = $multiple_arrays . "<option value=\"$id\">" . $result_host . "</option>";
     }
 }
-echo "<select multiple=\"multiple\">" . $select_from_array . "</select>"
+echo "<select multiple=\"multiple\">" . $multiple_arrays . "</select>"
 
 
 
