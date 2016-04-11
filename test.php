@@ -2,7 +2,6 @@
 
 $list1 = ['Tom', 'Forman', '1985'];
 
-
 $arr1 = array("Tom" => "firstname", "Forman" => "secondname", "1985" => "age");
 
 $list2 = ['Tom','1985'];

@@ -1,49 +1,39 @@
-<pre>
 <?php
 include "config.php";
 
-$arr1 = pg_query($connect, "SELECT a.id, a.ip, h.hostname FROM adresses a JOIN hostnames h ON a.id = h.id");
+$meaning_from_db1 = pg_query($connect, "SELECT * FROM adresses");
+$meaning_from_db2 = pg_query($connect, "SELECT * FROM hostnames");
 
 $hosts = [
     '192.168.0.1',
     '192.168.0.2',
     '192.168.0.10',
 ];
+//print_r($hosts);
 
-$p = pg_fetch_all($arr1);
+$conclusion_array1 = pg_fetch_all($meaning_from_db1);
+//print_r($conclusion_array1);
+$conclusion_array2 = pg_fetch_all($meaning_from_db2);
+//print_r($conclusion_array2);
 
-//print_r ($p);
-//$n = pg_num_rows($arr1);
-//for ($i = 0; $i<$n; $i++) {
-//
-//    echo $p[$i]['ip'].'<br/>';
-//}
+$new_array1 = array_column($conclusion_array1, 'id', 'ip');
+//print_r($new_array1);
+$new_array2 = array_column($conclusion_array2, 'hostname', 'id');
+//print_r($new_array2);
 
-echo "<select multiple='multiple'>";
+$select_from_array = '';
 
-function build_sorter($key) {
-    return function ($a, $b) use ($key) {
-        return strnatcmp($a[$key], $b[$key]);
-    };
+foreach ($hosts as $key) {
+    if (array_key_exists($key, $new_array1)) {
+        $id = $new_array1[$key];
+//        print_r($id);
+        $result_host = $new_array2[$id];
+//        print_r($result_host);
+        $select_from_array = $select_from_array . "<option value=\"$id\">" . $result_host . "</option>";
+    }
 }
-
-usort($p, build_sorter('id'));
-
-foreach ($p as $item) {
-    echo "<option>";
-    echo $item['id'] . ' => ' . $item['ip'] . ' => ' . $item['hostname'];
-    echo "</option>";
-
-}
-echo "</select>";
-
-
-// требуеться по данным которые возврощаються из БД построить форму <select>
-// в случае если ip адрес из БД осутствует в $host мы не рендарим этот пункт
-
-
+echo "<select multiple=\"multiple\">" . $select_from_array . "</select>"
 
 
 
 ?>
-    </pre>
