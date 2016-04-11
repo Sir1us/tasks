@@ -27,12 +27,12 @@ foreach ($hosts as $key) {
     if (array_key_exists($key, $new_array_adresses)) {
         $id = $new_array_adresses[$key];
 //        print_r($id);
-        $result_host = $new_array_hostnames[$id];
+        $result_hostname = $new_array_hostnames[$id];
 //        print_r($new_array_hostnames);
-        $multiple_arrays = $multiple_arrays . "<option value=\"$id\">" . $result_host . "</option>";
+        $multiple_arrays = $multiple_arrays . '<option value="'.$id.'">' . $result_hostname . '</option>';
     }
 }
-echo "<select multiple=\"multiple\">" . $multiple_arrays . "</select>"
+echo '<select multiple="multiple">' . $multiple_arrays . '</select>';
 
 
 
