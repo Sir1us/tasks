@@ -16,7 +16,7 @@ $array_adresses = pg_fetch_all($adresses_table);
 $array_hostnames = pg_fetch_all($hostnames_table);
 //print_r($array_hostnames);
 
-$new_array_adresses = array_column($array_adresses, 'ip', 'id');
+/*$new_array_adresses = array_column($array_adresses, 'ip', 'id');
 //print_r($new_array_adresses);
 $new_array_hostnames = array_column($array_hostnames, 'hostname', 'id');
 //print_r($new_array_hostnames);
@@ -24,12 +24,15 @@ $new_array_hostnames = array_column($array_hostnames, 'hostname', 'id');
 //$array = array_merge($new_array_hostnames, $new_array_adresses);
 //print_r($array);
 
-
-
-
 $r = array_diff($new_array_adresses, $hosts);
 
-print_r($r);
+print_r($r);*/
+
+$array = json_encode($array_adresses);
+echo $array;
+
+
+
 
 
 
